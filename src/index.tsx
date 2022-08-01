@@ -3,18 +3,17 @@ import ReactDOM from "react-dom/client";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { Context, initContext } from "./context";
-
 import App from "./App";
 import { Home } from "./pages";
 
 import "./index.css";
+import { RecoilRoot } from "recoil";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <Context.Provider value={initContext}>
+  <RecoilRoot>
     <BrowserRouter>
       <Routes>
         <Route path="*" element={<App />}>
@@ -22,5 +21,5 @@ root.render(
         </Route>
       </Routes>
     </BrowserRouter>
-  </Context.Provider>
+  </RecoilRoot>
 );

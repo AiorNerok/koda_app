@@ -1,7 +1,7 @@
 export interface IInitContext {
-    data: [],
+    data: object[] | [],
     dataOnRender: [],
     filterValue: string | string[],
-    searchValue: string,
+    searchValue: string | '',
     tabsList: string[]
 }

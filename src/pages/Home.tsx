@@ -1,14 +1,10 @@
-import { useContext } from "react";
+export const Home = (text: any) => {
+  
 
-import { Context } from "../context";
-
-export const Home = () => {
-
-    const ctx = useContext(Context)
-
-    console.log('ctx', ctx);
-    
-    return(
-        <div>home page</div>
-    )
+  return (
+    <div>
+      home page
+      <br />
+    </div>
+  );
 };

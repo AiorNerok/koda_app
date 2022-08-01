@@ -1,33 +1,24 @@
-import React, { useEffect, useContext, useCallback } from "react";
 import { Routes, Route } from "react-router-dom";
 import { Home } from "./pages";
 
-import { Context } from "./context";
-import { GetUniqueValues, requestAcion, searchData } from "./utils";
+import { useRecoilState } from "recoil";
+
+import { MainData } from "./recoil/atoms/MainData";
+import { useCallback, useEffect } from "react";
+import { requestAcion } from "utils";
 
 function App() {
-  const ctx = useContext(Context);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setMainData] = useRecoilState(MainData);
 
-  const setDataOnRenderFilter = useCallback(() => {
-    // @ts-ignore
-    return ctx.data.filter((i) => i["department"] === ctx.filterValue);
-  }, [ctx.data, ctx.filterValue]);
-
-  const setDataOnRenderSearch = useCallback(() => {
-    // @ts-ignore
-    return searchData(ctx.dataOnRender, ctx.searchValue);
-  }, [ctx.dataOnRender, ctx.searchValue]);
+  const req = useCallback(
+    () => requestAcion().then((r) => setMainData(r)),
+    [setMainData]
+  );
 
   useEffect(() => {
-    requestAcion().then((r) => {
-      ctx.data = r;
-      ctx.tabsList = GetUniqueValues(r);
-    });
-    // @ts-ignore
-    ctx.dataOnRender = setDataOnRenderFilter();
-    // @ts-ignore
-    ctx.dataOnRender = setDataOnRenderSearch();
-  }, [ctx, setDataOnRenderFilter, setDataOnRenderSearch]);
+    req();
+  }, [req]);
 
   return (
     <Routes>
