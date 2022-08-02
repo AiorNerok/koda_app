@@ -3,12 +3,17 @@ import { Home } from "./pages";
 
 import { useRecoilState, useRecoilValueLoadable } from "recoil";
 
-import { AtomMainData, AtomUniqueData } from "./recoil/atoms";
+import {
+  AtomArrayOnRender,
+  AtomMainData,
+  AtomUniqueData,
+} from "./recoil/atoms";
 import { useEffect } from "react";
 import { SelectorLoadMainData } from "recoil/selector/SelectorLoadMainData";
 
 function App() {
   const [, setAtomValMainData] = useRecoilState(AtomMainData);
+  const [, setAtomArrayOnRender] = useRecoilState(AtomArrayOnRender);
   const [, setAtomValUniqueData] = useRecoilState(AtomUniqueData);
 
   const userData = useRecoilValueLoadable(SelectorLoadMainData);
@@ -22,6 +27,7 @@ function App() {
       } = userData;
 
       setAtomValMainData(items);
+      setAtomArrayOnRender(items);
       // @ts-ignore
       let u: string[] = [...new Set(items.map((i) => i["department"]))];
       // @ts-ignore
