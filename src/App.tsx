@@ -1,24 +1,33 @@
 import { Routes, Route } from "react-router-dom";
 import { Home } from "./pages";
 
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValueLoadable } from "recoil";
 
-import { MainData } from "./recoil/atoms/MainData";
-import { useCallback, useEffect } from "react";
-import { requestAcion } from "utils";
+import { AtomMainData, AtomUniqueData } from "./recoil/atoms";
+import { useEffect } from "react";
+import { SelectorLoadMainData } from "recoil/selector/SelectorLoadMainData";
 
 function App() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setMainData] = useRecoilState(MainData);
+  const [, setAtomValMainData] = useRecoilState(AtomMainData);
+  const [, setAtomValUniqueData] = useRecoilState(AtomUniqueData);
 
-  const req = useCallback(
-    () => requestAcion().then((r) => setMainData(r)),
-    [setMainData]
-  );
+  const userData = useRecoilValueLoadable(SelectorLoadMainData);
+  let { state } = userData;
 
+  // @ts-ignore
   useEffect(() => {
-    req();
-  }, [req]);
+    if (state === "hasValue") {
+      let {
+        contents: { items },
+      } = userData;
+
+      setAtomValMainData(items);
+      // @ts-ignore
+      let u: string[] = [...new Set(items.map((i) => i["department"]))];
+      // @ts-ignore
+      setAtomValUniqueData(u);
+    }
+  }, [setAtomValMainData, setAtomValUniqueData, state, userData]);
 
   return (
     <Routes>
