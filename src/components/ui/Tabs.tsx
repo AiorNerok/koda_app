@@ -31,26 +31,34 @@ export const Tabs = () => {
   ];
 
   const handlerClick = (e: MouseEvent) => {
+    let target = e.target 
     // @ts-ignore
-    SetKey(e.target.getAttribute('data-origin'));
+    let {x, width} = target.getBoundingClientRect()
+    // @ts-ignore
+        SetKey(target.getAttribute("data-origin"));
   };
 
   return (
-    <ul className="flex">
-      {list &&
-        l.map((i, index) => {
-          return (
-            <li
-              data-origin={i.origin}
-              key={index}
-              className="px-3 py-2 cursor-pointer"
-              // @ts-ignore
-              onClick={(e: MouseEvent) => handlerClick(e)}
-            >
-              {i.value}
-            </li>
-          );
-        })}
-    </ul>
+    <>
+      <ul className="flex">
+        {list &&
+          l.map((i, index) => {
+            return (
+              <li
+                data-origin={i.origin}
+                key={index}
+                className="px-3 py-2 cursor-pointer"
+                // @ts-ignore
+                onClick={(e: MouseEvent) => handlerClick(e)}
+              >
+                {i.value}
+              </li>
+            );
+          })}
+      </ul>
+      <div style={{
+
+      }} className='h-[1px] w-4 bg-[#6534FF]'/>
+    </>
   );
 };

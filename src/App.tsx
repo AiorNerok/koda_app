@@ -33,7 +33,7 @@ function App() {
       // @ts-ignore
       setAtomValUniqueData(u);
     }
-  }, [setAtomValMainData, setAtomValUniqueData, state, userData]);
+  }, [setAtomArrayOnRender, setAtomValMainData, setAtomValUniqueData, state, userData]);
 
   return (
     <Routes>
